@@ -1,0 +1,36 @@
+---
+
+jobs:
+- name: Clone, Build & Deploy
+  plan:
+  - get: SourceCode
+    trigger: true #Trigger the pipeline if any commit in SourceCode repository
+  - get: Concourse
+    trigger: true #Trigger the pipeline if any commit in Concourse repository
+  - task: package
+    privileged: true #Elevate the privilage for building
+    file: Concourse/package.yml
+  - put: PWS
+    params:
+      manifest: build/MANIFEST.MF #Use this MANIFEST file for packaging
+      file: build/pivotal-sample-0.0.1-SNAPSHOT.jar
+
+resources:
+- name: SourceCode
+  type: git
+  source:
+    uri: https://github.com/primesoftsbulusu/SourceCode.git
+    branch: master
+- name: Concourse
+  type: git
+  source:
+    uri: https://github.com/primesoftsbulusu/Concourse.git
+    branch: master
+- name: PWS
+  type: cf
+  source:
+    api: https://api.run.pivotal.io
+    username: ((user-name))
+    password: ((pass-key))
+    organization: ((org-name))
+    space: ((space-name))

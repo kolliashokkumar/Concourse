@@ -19,12 +19,12 @@ resources:
 - name: SourceCode
   type: git
   source:
-    uri: https://github.com/primesoftsbulusu/SourceCode.git
+    uri: https://github.com/kolliashokkumar/SourceCode.git
     branch: master
 - name: Concourse
   type: git
   source:
-    uri: https://github.com/primesoftsbulusu/Concourse.git
+    uri: https://github.com/kolliashokkumar/Concourse.git
     branch: master
 - name: PWS
   type: cf
